@@ -27,3 +27,27 @@
 
 
 ### Stream 예제
+걸러내기
+- Filter(Predicate)
+
+변경하기
+- Map(Function) 또는 FlatMap(Function)
+- FlatMap 예) List<Stream<String>> 을 String 의 스트림으로 변경
+
+생성하기
+- generate(Supplier) 또는 Iterate(T seed, UnaryOperator)
+- 예) 10부터 1씩 증가하는 무제한 스트림
+- 예) 랜덤 int 무한 스트림
+
+제한하기
+- limit(long) , skip(long)
+- 스트림 개수 제한 or 스트림 데이터 몇개 스킵
+
+스트림에 있는 데이터가 특정 조건 만족하는지 확인
+- anyMatch() , allMatch(), nonMatch()
+
+개수세기
+- count()
+
+스트림 하나로 합치기
+- reduce(identity, BiFunction) , collect(), sum(), max()

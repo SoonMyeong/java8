@@ -53,7 +53,7 @@ public class StreamExampleTest {
 
         list.forEach(System.out::println);
 
-        //자바 11 에는 Predicate 인터페이스 포함되어있음..
+        //요렇게 쓸라면 자바 11..
 //        onlineClassList.stream()
 //                .filter(Predicate.not(OnlineClass::isClosed))
 //                .forEach(System.out::println);
