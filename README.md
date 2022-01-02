@@ -7,6 +7,51 @@
 
 ---
 ##Optional
+- 오직 값 한 개가 들어있을 수도 없을 수도 있는 컨테이너
+- 메서드에서 작업 중 특별한 상황에서 값을 제대로 리턴 할 수 없는 경우 선택
+### 주의사항
+- 리턴 값으로만 쓰기를 권장 (메서드 매개변수 타입, 맵의 key 타입 , 인스턴스 필드 타입으로 쓰지 말것!)
+- Optional 을 리턴하는 메서드에서 null 리턴 하지 말 것
+- primitive type 용 Optional 은 따로 존재함 (OptionalInt , OptionalLong ...)
+- Collection , Map, Stream Array , Optional 은 Optional 로 감싸지 말 것
+
+### Optional EXample
+Optional 만들기
+- Optional.of()
+- Optional.ofNullable()
+- Optional.empty()
+
+Optional에 값이 있는지 없는지 확인
+- isPresent()
+- isEmpty() (JAVA 11 이상)
+
+Optional 에 있는 값 가져오기
+- get()
+
+Optional 에 값이 있는 경우 그 값을 가지고 ~~를 하라.
+- ifPresent(Consumer)
+- 예) Spring 으로 시작하는 수업이 있을 시 ID 출력
+
+Optional 에 값이 있으면 가져오고 없는 경우에 ~~ 를 리턴
+- orElse(T)
+- 예) JPA로 시작하는 수업이 없다면 비어 있는 수업을 리턴하라.
+- orElse 의 경우 값이 있던 없던 모두 체크 하기에 대체로 orElseGet 을 사용
+
+Optional 에 값이 있으면 가져오고 없는 경우에 ~를 하라.
+- orElseGet(Supplier)
+- 예) JPA로 시작하는 수업이 없다면 새로 만들어 리턴
+- orElseGet 의 경우 값이 없는 경우에만 동작
+
+Optional 에 값이 있으면 가져오고 없으면 에러를 던져라.
+- orElseThrow()
+
+Optional 에 들어있는 값 걸러내기
+- Optional filter(Predicate)
+
+Optional 에 들어있는 값 변환
+- Optional map(Function)
+- Optional flatMap(Function) : Optional 안에 들어있는 인스턴스가 Optional 인 경우 사용 시 편리
+
 
 ---
 ##Stream
