@@ -1,12 +1,31 @@
-#JAVA 8 코드 정리
+# JAVA 8 코드 정리
 
 ## JAVA 8 에 나온 개념에 대해 간단히 정리 해보기
 
 ---
-##Lambda 
+## Functional Interface
+- 추상 메서드를 딱 하나만 가지고 있는 인터페이스
+- SAM (Single Abstract Method) 인터페이스 (그냥 해석.. 하나의 추상 메서드 인터페이스)
+- @FunctionalInterface 애노테이션을 가지고 있는 인터페이스
+
+### 기본으로 제공하는 함수형 인터페이스
+- Function<T,R> : T 타입을 받아서 R 타입을 리턴, R apply(T t) 
+- BiFunction<T,U,R> : T, U 값을 받아 R 타입을 리턴 R apply(T t U u)
+- Consumer<T> : T 타입을 받아 아무 값도 리턴 안함 void Accept(T t)
+- Supplier<T> : T 타입의 값을 제공
+- Predicate<T> : T 타입을 받아 boolean 을 리턴
+- UnaryOperator<T> : Function<T,R> 의 특수한 형태, 입력 값과 동일한 타입을 리턴할 때 사용
+- BinaryOperator<T> : BiFunction<T,U,R>의 특수한 형태, 동일한 타입의 입력값 두개를 받아 동일한 타입을 리턴할 때 사용
+
+
+## Lambda 
+- 함수형 인터페이스의 인스턴스를 만드는 방법
+- 코드 라인 수 감소 이점
+- 메서드 매개변수, 리턴 타입, 변수로 만들어 사용 가능
+
 
 ---
-##Optional
+## Optional
 - 오직 값 한 개가 들어있을 수도 없을 수도 있는 컨테이너
 - 메서드에서 작업 중 특별한 상황에서 값을 제대로 리턴 할 수 없는 경우 선택
 ### 주의사항
@@ -54,7 +73,7 @@ Optional 에 들어있는 값 변환
 
 
 ---
-##Stream
+## Stream
 - 데이터를 담고 있는 저장소 X
 - 스트림이 처리하는 데이터 소스를 변경 하진 않는다.
 - 스트림으로 처리하는 데이터는 오직 "한번" 만 처리
