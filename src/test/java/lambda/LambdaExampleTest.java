@@ -3,8 +3,8 @@ package lambda;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.function.Consumer;
-import java.util.function.IntConsumer;
+import java.util.Arrays;
+import java.util.function.*;
 
 public class LambdaExampleTest {
 
@@ -35,6 +35,45 @@ public class LambdaExampleTest {
             System.out.println(i + baseNumber);
         };
 
+    }
+
+    @DisplayName("스태틱 메서드 참조")
+    @Test
+    void static_method_test() {
+        UnaryOperator<String> hello = Soon::hello;
+        System.out.println(hello.apply("soon"));
+    }
+
+    @DisplayName("특정 객체의 인스턴스 메서드 참조")
+    @Test
+    void instance_method_test() {
+        Soon soon = new Soon();
+        UnaryOperator<String> hello = soon::world;
+        System.out.println(hello.apply("instance"));
+    }
+
+    @DisplayName("임의 객체의 인스턴스 메서드 참조")
+    @Test
+    void instance_method_test2() {
+        String[] test = {"soon","world","time is gone"};
+        Arrays.sort(test, String::compareToIgnoreCase); //대소문자 구분없이 정렬
+        System.out.println(Arrays.toString(test));
+
+    }
+
+
+    @DisplayName("파라미터 있는 생성자 참조")
+    @Test
+    void constructor_method_test() {
+        Function<String,Soon> soon = Soon::new;
+        System.out.println(soon.apply("Soon").getName());
+    }
+
+    @DisplayName("파라미터 없는 생성자 참조")
+    @Test
+    void constructor_method_test2() {
+        Supplier<Soon> soon = Soon::new;
+        System.out.println(soon.get().getName());
     }
 
 }
