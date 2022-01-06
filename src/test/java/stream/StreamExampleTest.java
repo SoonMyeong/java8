@@ -3,7 +3,6 @@ package stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import stream.OnlineClass;
 
 import java.util.ArrayList;
 import java.util.Collection;

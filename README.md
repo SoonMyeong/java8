@@ -29,7 +29,40 @@
 - 임의 객체의 인스턴스 메서드 참조 = 타입::인스턴스 메서드
 - 생성자 참조 = 타입::new
 
----
+## 인터페이스의 변화 (기본 메서드와 스테틱 메서드)
+### 기본(default) 메서드
+- 인터페이스에 구현체를 제공 함
+- 인터페이스를 구현한 클래스를 깨트리지 않고 새 기능을 추가할 수 있음!!!!
+- 구현체가 모르게 추가된 기능이므로 리스크가 존재
+  - 구현체에 따라 런타임 에러 발생 우려
+  - 반드시 문서화! (@ImplSpec 자바독 태그 사용)
+- Object 가 제공하는 (equals, hasCode) 는 기본 메서드로 제공할 수 없다.
+- 기본 메서드를 가진 인터페이스를 상속받는 인터페이스 에서 다시 추상 메서드로 변경 가능
+- 본인이 수정할 수 있는 인터페이스에만 기본 메서드를 제공 할 수 있다.
+
+
+### 스테틱 메서드
+- 핼퍼 또는 유틸리티 메서드를 제공 할 때 인터페이스에 스태틱 메서드를 제공
+
+
+### Iterable 의 기본 메서드
+- foreach()
+- spliterator()
+
+### Collection 의 기본 메서드
+- stream() / parallelStream()
+- removeIf(Predicate)
+- spliterator()
+
+### Comparator 의 기본 메서드
+- reversed()
+- thenComparing()
+- static reverseOrder() / naturalOrder()
+- static nullsFirst() / nullsLast()
+- static comparing()
+
+
+
 ## Optional
 - 오직 값 한 개가 들어있을 수도 없을 수도 있는 컨테이너
 - 메서드에서 작업 중 특별한 상황에서 값을 제대로 리턴 할 수 없는 경우 선택
