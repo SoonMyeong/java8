@@ -3,9 +3,7 @@ package generic;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class GenericTest<T> {
 
@@ -114,11 +112,22 @@ public class GenericTest<T> {
      *
      */
 
-     static void printList(List<Object> list) {
+     static <T> void printList(List<T> list) {
          list.forEach(s-> System.out.println(s));
      }
-     static void printList2(List<?> list) {
+
+    /**
+     * 사용 할수 있는 메서드 들.. (Object 메서드)
+     * //         list.size();
+     * //         list.clear();
+     * //         Iterator<?> it = list.iterator();
+     * //         list.equals()
+     *
+     */
+    static void printList2(List<?> list) {
          list.forEach(s-> System.out.println(s));
+         list.add(null); // null 만 넣을 수 있다.
+
      }
 
      static class A{}
@@ -134,8 +143,116 @@ public class GenericTest<T> {
         System.out.println("-----------------------------------");
         List<B> lb = new ArrayList<B>();
 //        List<A> la = listB; // 컴파일 에러
-        List<? extends B> la = lb; // 와일드카드의 경우는 됨
+        List<? extends A> la = lb; // 와일드카드의 경우는 됨
         List<? super B> la2 = lb;
     }
+
+
+    static <T> boolean isEmpty(List<T> list) {
+        return list.size() == 0;
+    }
+    static boolean isEmpty2(List<?> list) { // List 의 기능(매서드) 만 사용할 경우, <> 타입에 따른 처리 안할 경우
+        return list.size() == 0;
+    }
+
+    @DisplayName("제네릭 와일드카드#2")
+    @Test
+    void generic_Test_6() {
+        List<Integer> list = Arrays.asList(1,2,3);
+        System.out.println(isEmpty(list));
+    }
+
+
+    /**
+     * 오라클의 공식적인 자바 스팩 문서에서는 T 제네릭보단 와일드카드를 권장
+     * [이유]
+     * 1. T 타입을 내부 구현에서 사용하므로 외부 노출
+     * 2. 의도를 바르게 드러내기 못하는 코드
+     *
+     */
+    static <T> long frequency(List<T> list, T el) {
+        return list.stream().filter(s-> s.equals(el)).count();
+    }
+    static long frequency2(List<?> list, Object el ) { // Object 메서드 사용할 경우 ? 사용 가능
+        return list.stream().filter(s-> s.equals(el)).count();
+    }
+
+    @DisplayName("제네릭 와일드카드#3")
+    @Test
+    void generic_Test_7() {
+        List<Integer> list = Arrays.asList(1,2,3,3,3,4,5);
+        System.out.println(frequency(list,3));
+        System.out.println(frequency2(list,3));
+    }
+
+
+    static <T extends Comparable<T>> T max(List<T> list) {
+        return list.stream().reduce((a,b) -> a.compareTo(b) >0 ? a : b).get();
+    }
+
+    /**
+     * 소비자 : extends
+     * 공급자 : super
+     * 대표적인 예 : Collections.copy 메서드 내용
+     */
+    static <T extends Comparable<? super T>> T max2(List<? extends T> list) {
+        return list.stream().reduce((a,b) -> a.compareTo(b) >0 ? a : b).get();
+    }
+
+    @DisplayName("제네릭 와일드카드#4")
+    @Test
+    void generic_Test_8() {
+        List<Integer> list = Arrays.asList(1,2,3,3,3,4,5);
+        System.out.println(max(list));
+        System.out.println(Collections.max(list, (a,b)-> a+b));
+        System.out.println(Collections.max(list, (Comparator<Object>)(a,b)-> a.toString().compareTo(b.toString())));
+    }
+
+
+    static <T> void reverse(List<T> list) {
+        List<T> temp = new ArrayList<>(list);
+        for(int i=0; i<list.size(); i++) {
+            list.set(i,temp.get(list.size()-i-1));
+        }
+    }
+
+    static void reverse2(List<?> list) {
+//        List<T> temp = new ArrayList<>(list);
+//        for(int i=0; i<list.size(); i++) {
+//            list.set(i,temp.get(list.size()-i-1));
+//        } -->
+//        컴파일 에러를 피하기 위해서는 캡쳐를 위해 헬퍼 메서드를 이용, (제네릭타입 으로 변환시켜서 캡쳐화)
+//        이러면 API 클라이언트에게는 제네릭 타입이 노출이 안되서 장점이긴 한데... 어.. 굳이...? 이럴 필요는 없긴하다..(우리가 자바 라이브러리 개발자가 아닌이상..)
+        reverseHelper(list); //제네릭 캡쳐
+    }
+
+    static void reverse3(List<?> list) { //제네릭 캡쳐 아니면 로타입을 이용하는 방법
+        List temp = new ArrayList<>(list);
+        List list2 = list;
+        for(int i=0; i<list.size(); i++) {
+            list2.set(i,temp.get(list2.size()-i-1));
+        }
+    }
+
+    private static <T> void reverseHelper(List<T> list) {
+        List<T> temp = new ArrayList<>(list);
+        for(int i=0; i<list.size(); i++) {
+            list.set(i,temp.get(list.size()-i-1));
+        }
+    }
+
+    /**
+     * 상당히 어렵다. 자바 라이브러리 개발자들이란.. 크..
+     */
+    @DisplayName("제네릭 와일드카드 캡쳐")
+    @Test
+    void generic_Test_9() {
+        List<Integer> list = Arrays.asList(1,2,3,4,5);
+//        reverse(list);
+        reverse2(list);
+        System.out.println(list);
+    }
+    
+    
 
 }
