@@ -153,3 +153,26 @@ Optional 에 들어있는 값 변환
 
 스트림 하나로 합치기
 - reduce(identity, BiFunction) , collect(), sum(), max()
+
+## Concurrent Programing
+### 자바에서 지원하는 컨커런트 프로그래밍
+- 멀티프로세싱, 멀티스레드
+
+## Executors
+### 고수준 Concurrency Programing
+- 스레드를 만들고 관리하는 작업을 애플리케이션에서 분리
+
+### Executors 가 하는일
+- 스레드 생성
+- 스레드 관리
+- 작업 처리 및 실행 : 스레드로 실행할 작업을 제공할 수있는 API 제공
+
+### 주요 인터페이스
+- Executor.execute(Runnable)
+- ExecutorService : Callable 도 실행 가능하며 Executor 를 종료 시키거나, 여러 Callable 을
+동시에 실행 하는 등의 기능 제공
+- ScheduledExecutorService : ExecutorService 를 상속 받는 인터페이스로 특정 시간 이후 또는 주기적으로
+작업을 실행할 수 있다.
+
+### Fork/Join framework
+- ExecutorService 의 구현체
