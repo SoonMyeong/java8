@@ -176,3 +176,16 @@ Optional 에 들어있는 값 변환
 
 ### Fork/Join framework
 - ExecutorService 의 구현체
+
+
+## Callable & Future
+### Callable
+- Runnable 과 유사하지만 Runnable 과 다르게 작업 결과물을 받을 수 있음
+
+### Future
+- 비동기적인 작업의 현재 상태 조회 및 결과를 가져올 수 있음
+- get() : 결과 가져오기 , 블로킹 콜임 (넌블로킹 아님)
+- isDone() : 상태 확인 (true/false)
+- cancel() : 취소하기 (true/false) , 파라미터로 true 전달 시 진행중인 스레드 interrupt, 그렇지 않으면 작업 끝날때 까지 기다림
+- invokeAll() : 여러 작업 동시 실행
+- invokeAny() : 여러 작업 중 하나라도 응답 오면 끝내기 (블로킹 콜)
