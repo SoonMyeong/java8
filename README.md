@@ -189,3 +189,34 @@ Optional 에 들어있는 값 변환
 - cancel() : 취소하기 (true/false) , 파라미터로 true 전달 시 진행중인 스레드 interrupt, 그렇지 않으면 작업 끝날때 까지 기다림
 - invokeAll() : 여러 작업 동시 실행
 - invokeAny() : 여러 작업 중 하나라도 응답 오면 끝내기 (블로킹 콜)
+
+
+## CompletableFuture
+- 자바 비동기 프로그래밍을 가능케 하는 인터페이스 
+
+### 기존에 있던 Future 의 한계
+- Future 를 외부에서 완료 시킬 수 없고 취소하거나 get() 에 대한 타임아웃 설정 불가
+- 블로킹 코드 없이는 콜백 실행 할 수 없다.
+- 여러 Future 를 조합할 수 없다. (ex. Event 정보 가져온 다음 Event 에 참석하는 회원 목록 가져오기 등...)
+- 예외 처리 API 없음
+
+### 비동기로 작업 실행
+- 리턴 값이 없는 경우 : runAsync()
+- 리턴 값이 있는 경우 : supplyAsync()
+- 원하는 Executor 를 사용해서 실행할 수 있다. (default. ForkJoinPool.commonPool())
+
+### 콜백 제공하기
+- thenApply(Function) : 리턴 값을 받아 다른 값으로 바꿈
+- thenAccept(Consumer) : 리턴 값을 또 다른 작업을 처리하는 콜백 (리턴 없이)
+- thenRun(Runnable) : 리턴 값 받지않고 다른 작업 처리하는 콜백
+- 콜백 자체를 또 다른 스레드에서 실행 가능
+
+### 조합
+- thenCompose() : 두 작업이 서로 이어서 실행하도록 조합
+- thenCombine() : 두 작업을 독립적으로 실행, 둘 다 종료되었을 때 콜백 발생
+- allOf() : 여러 작업을 모두 실행하고 모든 작업 결과에 콜백 발생
+- anyOf() : 여러 작업 중 가장 빨리 끝난 하나의 결과에 콜백
+
+### 예외처리
+- exceptionally(Function)
+- handle(BiFunction)
