@@ -126,7 +126,7 @@ public class GenericTest<T> {
      */
     static void printList2(List<?> list) {
          list.forEach(s-> System.out.println(s));
-         list.add(null); // null 만 넣을 수 있다.
+//         list.add(null); // null 만 넣을 수 있다.
 
      }
 
@@ -137,7 +137,7 @@ public class GenericTest<T> {
     @Test
     void generic_Test_5() {
         List<Integer> list = Arrays.asList(1,2,3);
-//        printList(list); //컴파일 에러
+//        printList(list);
         printList2(list); // 정상동작, 여기서 와일드카드는 제네릭타입을 아무 타입이나 받을 수 있다는 의미
 
         System.out.println("-----------------------------------");
